@@ -22,7 +22,32 @@ const insertarProducto = (request,response)=>{
        }  
 }
 
+const obtenerProductos= (request,response)=>{
+    Producto.find()
+        .then(listaProductos=>{
+            return response.status(200).json(listaProductos);
+        })
+        .catch (err=>{
+            response.statusMessage="Hubo un error al ejecutar el find. "+err;
+            return response.status(400).end();
+        });
+}
+
+const obtenerProducto= (request,response)=>{
+    const{_id}=request.params;
+    Producto.findOne({_id})
+        .then(Producto=>{
+            return response.status(200).json(Producto);
+        })
+        .catch (err=>{
+            response.statusMessage="Hubo un error al ejecutar el find. "+err;
+            return response.status(400).end();
+        });
+}
+
 const ControladorProducto={
-    insertarProducto
+    insertarProducto,
+    obtenerProductos,
+    obtenerProducto
 }
 module.exports=ControladorProducto
